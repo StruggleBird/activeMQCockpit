@@ -1,4 +1,3 @@
-<%@page import="org.apache.activemq.broker.jmx.BrokerMBeanSupport"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <!DOCTYPE html>
