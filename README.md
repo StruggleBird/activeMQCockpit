@@ -4,9 +4,8 @@ targeted as alternative (which it is not yet) for the activeMQ web console with 
 This in early developement state and still setup as an eclipse web project, tested only with local activeMQ. 
 Please note, that it currently requires the broker name to be localhost and the management context in activemq.xml 
 to be configured as: 
-<managementContext>
-    <managementContext connectorPort="2011" jmxDomainName="org.apachemq"/>
-</managementContext>
+
+connectorPort="2011" jmxDomainName="org.apachemq"
 
 Currently the the following views are supported: 
 - broker detail 
