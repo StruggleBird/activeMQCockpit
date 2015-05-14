@@ -7,7 +7,7 @@ to be configured as:
 
 connectorPort="2011" jmxDomainName="org.apachemq"
 
-Currently the the following views are supported: 
+Currently the the following views are included: 
 - broker detail 
 - queues and topics, both with filter support
 - queue messages and the message details
