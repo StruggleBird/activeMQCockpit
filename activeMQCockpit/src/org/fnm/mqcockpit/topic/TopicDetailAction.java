@@ -8,8 +8,9 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 import org.apache.activemq.broker.jmx.TopicViewMBean;
+import org.fnm.mqcockpit.JMXAction;
 
-public class TopicDetailAction {
+public class TopicDetailAction extends JMXAction {
 
 	private String topicName;
 	private TopicBean topic;
@@ -19,14 +20,17 @@ public class TopicDetailAction {
 	 */
 	public String execute() throws Exception {
 
-		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:2011/jmxrmi");
+		if (!checkJMXSettings())
+			return "missingJmxSettings";
+
+		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + jmxPort + "/jmxrmi");
 		JMXConnector connector = JMXConnectorFactory.connect(url, null);
 		connector.connect();
 
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
 
-		ObjectName objectName = new ObjectName(
-				"org.apachemq:type=Broker,brokerName=localhost,destinationType=Topic,destinationName=" + topicName);
+		ObjectName objectName = new ObjectName("org.apachemq:type=Broker,brokerName=" + jmxBrokerName
+				+ ",destinationType=Topic,destinationName=" + topicName);
 
 		TopicViewMBean topicMBean = MBeanServerInvocationHandler.newProxyInstance(connection, objectName,
 				TopicViewMBean.class, true);

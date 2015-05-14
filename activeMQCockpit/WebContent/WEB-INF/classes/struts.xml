@@ -3,31 +3,45 @@
    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
    "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
+
   <constant name="struts.devMode" value="true" />
+
   <package name="broker" extends="struts-default">
+
+    <action name="postBrokerSettings" class="org.fnm.mqcockpit.broker.PostBrokerSettingsAction" method="execute">
+      <result name="success" type="redirectAction">brokerDetail</result>
+    </action>
     <action name="brokerDetail" class="org.fnm.mqcockpit.broker.BrokerDetailAction" method="execute">
       <result name="success">/brokerDetail.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="getFilteredQueues" class="org.fnm.mqcockpit.queue.GetFilteredQueuesAction" method="execute">
       <result name="success">/queueTable.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="getFilteredTopics" class="org.fnm.mqcockpit.topic.GetFilteredTopicsAction" method="execute">
       <result name="success">/topicTable.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="queueDetail" class="org.fnm.mqcockpit.queue.QueueDetailAction" method="execute">
       <result name="success">/queueDetail.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="topicDetail" class="org.fnm.mqcockpit.topic.TopicDetailAction" method="execute">
       <result name="success">/topicDetail.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="purgeQueue" class="org.fnm.mqcockpit.queue.PurgeQueueAction" method="execute">
       <result name="success">/queueDetail.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="deleteQueue" class="org.fnm.mqcockpit.queue.DeleteQueueAction" method="execute">
       <result name="success" type="redirectAction">getFilteredQueues</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="deleteTopic" class="org.fnm.mqcockpit.topic.DeleteTopicAction" method="execute">
       <result name="success" type="redirectAction">getFilteredTopics</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="getMessages" class="org.fnm.mqcockpit.message.GetMessagesAction" method="execute">
       <result name="success">/messageTable.jsp</result>
@@ -37,6 +51,7 @@
     </action>
     <action name="deleteMessage" class="org.fnm.mqcockpit.message.DeleteMessageAction" method="execute">
       <result name="success">/messageTable.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
     </action>
     <action name="postMessage" class="org.fnm.mqcockpit.message.PostMessageAction" method="execute">
       <result name="success">/messageTable.jsp</result>

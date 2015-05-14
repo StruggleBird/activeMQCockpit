@@ -12,8 +12,9 @@ import javax.management.remote.JMXServiceURL;
 
 import org.apache.activemq.broker.jmx.BrokerViewMBean;
 import org.apache.activemq.broker.jmx.TopicViewMBean;
+import org.fnm.mqcockpit.JMXAction;
 
-public class GetFilteredTopicsAction {
+public class GetFilteredTopicsAction extends JMXAction {
 
 	private List<TopicBean> topics = new ArrayList<>();
 
@@ -23,13 +24,16 @@ public class GetFilteredTopicsAction {
 	 * called, when the user performs a UI action (see struts.xml)
 	 */
 	public String execute() throws Exception {
+		
+		if (!checkJMXSettings())
+			return "missingJmxSettings";
 
-		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:2011/jmxrmi");
+		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:"+jmxPort+"/jmxrmi");
 		JMXConnector connector = JMXConnectorFactory.connect(url, null);
 		connector.connect();
 
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
-		ObjectName name = new ObjectName("org.apachemq:type=Broker,brokerName=localhost");
+		ObjectName name = new ObjectName("org.apachemq:type=Broker,brokerName="+jmxBrokerName);
 		BrokerViewMBean mbean = MBeanServerInvocationHandler
 				.newProxyInstance(connection, name, BrokerViewMBean.class, true);
 		for (ObjectName objectName : mbean.getTopics()) {

@@ -8,8 +8,9 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 import org.apache.activemq.broker.jmx.QueueViewMBean;
+import org.fnm.mqcockpit.JMXAction;
 
-public class PurgeQueueAction {
+public class PurgeQueueAction extends JMXAction {
 
 	private String queueName;
 
@@ -19,12 +20,15 @@ public class PurgeQueueAction {
 	 * called, when the user performs a UI action (see struts.xml)
 	 */
 	public String execute() throws Exception {
+		
+		if (!checkJMXSettings())
+			return "missingJmxSettings";
 
-		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:2011/jmxrmi");
+		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:"+jmxPort+"/jmxrmi");
 		JMXConnector connector = JMXConnectorFactory.connect(url, null);
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
 		ObjectName objectName = new ObjectName(
-				"org.apachemq:type=Broker,brokerName=localhost,destinationType=Queue,destinationName=" + queueName);
+				"org.apachemq:type=Broker,brokerName="+jmxBrokerName+",destinationType=Queue,destinationName=" + queueName);
 		QueueViewMBean queueViewMBean = MBeanServerInvocationHandler.newProxyInstance(connection,
 				objectName, QueueViewMBean.class, true);
 		queueViewMBean.purge();
