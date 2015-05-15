@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<project xmlns='antlib:org.apache.tools.ant'>
+	<war destfile="activeMQCockpit.war" webxml="WebContent/WEB-INF/web.xml">
+		<fileset dir="WebContent"/>
+		<lib dir="WebContent/WEB-INF/lib"/>
+		<classes dir="build/classes" />
+	</war>
+</project>

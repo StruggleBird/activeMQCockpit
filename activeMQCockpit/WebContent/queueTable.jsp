@@ -53,6 +53,13 @@
                     </s:param>
                     </s:url>>Messages</a>
                 </td>
+                <td><a
+                    href=<s:url action="getConsumer">
+                    <s:param name="queueName">
+                    <s:property value="name" />
+                    </s:param>
+                    </s:url>>Consumer</a>
+                </td>
               </tr>
             </s:iterator>
           </tbody>

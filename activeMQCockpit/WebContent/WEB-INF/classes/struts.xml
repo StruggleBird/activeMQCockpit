@@ -56,5 +56,13 @@
     <action name="postMessage" class="org.fnm.mqcockpit.message.PostMessageAction" method="execute">
       <result name="success">/messageTable.jsp</result>
     </action>
+    <action name="getConsumer" class="org.fnm.mqcockpit.queue.GetConsumerAction" method="execute">
+      <result name="success">/consumerTable.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
+    </action>
+    <action name="consumerDetail" class="org.fnm.mqcockpit.queue.ConsumerDetailAction" method="execute">
+      <result name="success">/consumerDetail.jsp</result>
+      <result name="missingJmxSettings">/index.jsp</result>
+    </action>
   </package>
 </struts>
