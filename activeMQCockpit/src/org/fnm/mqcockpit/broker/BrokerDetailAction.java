@@ -1,5 +1,8 @@
 package org.fnm.mqcockpit.broker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
@@ -21,36 +24,58 @@ public class BrokerDetailAction extends JMXAction {
 	private long totalConsumerCount;
 	private long totalProducerCount;
 
+	private List<String> errorMessages;
+
 	/**
 	 * called, when the user performs a UI action (see struts.xml)
 	 */
-	public String execute() throws Exception {
+	public String execute() {
 
 		if (!checkJMXSettings())
 			return "missingJmxSettings";
 
-		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + jmxPort + "/jmxrmi");
-		JMXConnector connector = JMXConnectorFactory.connect(url, null);
-		connector.connect();
+		try {
 
-		MBeanServerConnection connection = connector.getMBeanServerConnection();
-		ObjectName objectName = new ObjectName("org.apachemq:type=Broker,brokerName=" + jmxBrokerName);
+			JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + jmxPort + "/jmxrmi");
+			JMXConnector connector = JMXConnectorFactory.connect(url, null);
+			connector.connect();
 
-		BrokerViewMBean brokerViewMBean = MBeanServerInvocationHandler.newProxyInstance(connection, objectName,
-				BrokerViewMBean.class, true);
+			MBeanServerConnection connection = connector.getMBeanServerConnection();
+			ObjectName objectName = new ObjectName("org.apachemq:type=Broker,brokerName=" + jmxBrokerName);
 
-		brokerName = brokerViewMBean.getBrokerName();
-		brokerId = brokerViewMBean.getBrokerId();
-		uptime = brokerViewMBean.getUptime();
-		totalMessageCount = brokerViewMBean.getTotalMessageCount();
-		totalEnqueueCount = brokerViewMBean.getTotalEnqueueCount();
-		totalDequeueCount = brokerViewMBean.getTotalDequeueCount();
-		totalConsumerCount = brokerViewMBean.getTotalConsumerCount();
-		totalProducerCount = brokerViewMBean.getTotalProducerCount();
+			BrokerViewMBean brokerViewMBean = MBeanServerInvocationHandler.newProxyInstance(connection, objectName,
+					BrokerViewMBean.class, true);
 
-		connector.close();
+			brokerName = brokerViewMBean.getBrokerName();
+			brokerId = brokerViewMBean.getBrokerId();
+			uptime = brokerViewMBean.getUptime();
+			totalMessageCount = brokerViewMBean.getTotalMessageCount();
+			totalEnqueueCount = brokerViewMBean.getTotalEnqueueCount();
+			totalDequeueCount = brokerViewMBean.getTotalDequeueCount();
+			totalConsumerCount = brokerViewMBean.getTotalConsumerCount();
+			totalProducerCount = brokerViewMBean.getTotalProducerCount();
+			connector.close();
 
-		return "success";
+			return "success";
+
+		} catch (Exception e) {
+			
+			errorMessages = new ArrayList<>(); 
+			
+			StringBuffer buffer = new StringBuffer(); 
+			buffer.append("Could not establish the connection to broker "); 
+			buffer.append(jmxBrokerName); 
+			buffer.append(" on port "); 
+			buffer.append(jmxPort); 
+			errorMessages.add(buffer.toString()); 
+			
+			errorMessages.add("Exception is:");
+			errorMessages.add(e.getClass().getSimpleName()); 
+			errorMessages.add(e.getMessage()); 
+			
+			return "error"; 
+		}
+
 	}
 
 	public String getBrokerName() {
@@ -83,5 +108,9 @@ public class BrokerDetailAction extends JMXAction {
 
 	public long getTotalProducerCount() {
 		return totalProducerCount;
+	}
+
+	public List<String> getErrorMessages() {
+		return errorMessages;
 	}
 }
