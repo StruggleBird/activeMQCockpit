@@ -1,5 +1,6 @@
 package org.fnm.mqcockpit;
 
+import java.util.List;
 import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -8,6 +9,8 @@ public class JMXAction {
 	
 	protected String jmxBrokerName; 
 	protected String jmxPort;
+	
+	protected List<String> errorMessages;
 	
 	@SuppressWarnings("rawtypes")
 	protected boolean checkJMXSettings(){
@@ -21,6 +24,10 @@ public class JMXAction {
 		else 
 			return true; 
 		
+	}
+	
+	public List<String> getErrorMessages() {
+		return errorMessages;
 	}
 
 }

@@ -11,7 +11,8 @@
     <div class="col-sm-9">
       <h2 class="sub-header">Message Detail</h2>
       <div class="btn-group col-sm-2 col-sm-offset-9" role="group">
-        <button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Message</button>
+        <button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#deleteModal">Delete
+          Message</button>
       </div>
       <p>&nbsp;</p>
       <div class="table-responsive col-sm-12">
@@ -44,6 +45,10 @@
               <td><s:property value="message.timestamp" /></td>
             </tr>
             <tr>
+              <td>Priority</td>
+              <td><s:property value="message.jmsPriority" /></td>
+            </tr>
+            <tr>
               <td>Is Persistent</td>
               <td><s:property value="message.persistent" /></td>
             </tr>
@@ -57,8 +62,25 @@
             </tr>
             <tr>
               <td>Is Expired</td>
-              <td><s:property value="message.expired"/></td>
+              <td><s:property value="message.expired" /></td>
             </tr>
+          </tbody>
+        </table>
+        <!-- the properties -->
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <s:iterator value="message.properties.entrySet()" var="entry">
+              <tr>
+                <td><s:property value="key" /></td>
+                <td><s:property value="value" /></td>
+              </tr>
+            </s:iterator>
           </tbody>
         </table>
         <!-- the content -->

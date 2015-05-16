@@ -1,5 +1,10 @@
 package org.fnm.mqcockpit.message;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.jms.TextMessage;
 
 import org.apache.activemq.command.ActiveMQMessage;
@@ -18,8 +23,10 @@ public class MessageBean {
 	private boolean isResponse;
 	private String text;
 	private String jmsMessageId; 
+	private long jmsPriority; 
+	private Map<String, Object> properties = new HashMap<>(); 
 
-	public void build(ActiveMQMessage msg) {
+	public void build(ActiveMQMessage msg) throws IOException {
 		className = msg.getClass().getSimpleName();
 		correlationId = msg.getCorrelationId();
 		replyTo = (msg.getReplyTo() != null) ? msg.getReplyTo().getPhysicalName() : "";
@@ -34,6 +41,12 @@ public class MessageBean {
 		} catch (Exception e) {
 			text = e.getMessage();
 		}
+		jmsPriority = msg.getJMSPriority(); 
+		Map<String, Object> props = msg.getProperties();
+		for (Entry<String, Object> entry : props.entrySet()) {
+			properties.put(entry.getKey(), entry.getValue()); 
+		} 
+		
 	}
 
 	public String getClassName() {
@@ -130,6 +143,18 @@ public class MessageBean {
 
 	public void setQueueName(String queueName) {
 		this.queueName = queueName;
+	}
+
+	public long getJmsPriority() {
+		return jmsPriority;
+	}
+
+	public void setJmsPriority(long jmsPriority) {
+		this.jmsPriority = jmsPriority;
+	}
+
+	public Map<String, Object> getProperties() {
+		return properties;
 	}
 
 }

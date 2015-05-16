@@ -1,7 +1,6 @@
 package org.fnm.mqcockpit.broker;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
@@ -23,8 +22,6 @@ public class BrokerDetailAction extends JMXAction {
 	private long totalDequeueCount;
 	private long totalConsumerCount;
 	private long totalProducerCount;
-
-	private List<String> errorMessages;
 
 	/**
 	 * called, when the user performs a UI action (see struts.xml)
@@ -110,7 +107,4 @@ public class BrokerDetailAction extends JMXAction {
 		return totalProducerCount;
 	}
 
-	public List<String> getErrorMessages() {
-		return errorMessages;
-	}
 }
