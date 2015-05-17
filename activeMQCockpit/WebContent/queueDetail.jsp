@@ -83,6 +83,8 @@
         Queue</button>
     </div>
   </div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </div>
 <!-- Purge Modal -->
 <div class="modal fade" id="purgeModal" tabindex="-1" role="dialog" aria-labelledby="purgeModalLabel" aria-hidden="true">

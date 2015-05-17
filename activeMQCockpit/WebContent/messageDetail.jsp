@@ -4,10 +4,8 @@
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
-  <p>&nbsp;</p>
   <div class="row">
     <%@ include file="sideMenu.jsp"%>
-    <p>&nbsp;</p>
     <div class="col-sm-9">
       <h2 class="sub-header">Message Detail</h2>
       <div class="btn-group col-sm-2 col-sm-offset-9" role="group">
