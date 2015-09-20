@@ -25,7 +25,7 @@ public class DeleteQueueAction extends JMXAction {
 		JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:"+jmxPort+"/jmxrmi");
 		JMXConnector connector = JMXConnectorFactory.connect(url, null);
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
-		ObjectName name = new ObjectName("org.apachemq:type=Broker,brokerName="+jmxBrokerName);
+		ObjectName name = new ObjectName("org.apache.activemq:type=Broker,brokerName="+jmxBrokerName);
 		BrokerViewMBean brokerViewMBean = MBeanServerInvocationHandler.newProxyInstance(connection, name,
 				BrokerViewMBean.class, true);
 		brokerViewMBean.removeQueue(queueName);

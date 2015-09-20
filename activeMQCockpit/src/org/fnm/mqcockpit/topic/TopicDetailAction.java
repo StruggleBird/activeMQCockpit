@@ -29,7 +29,7 @@ public class TopicDetailAction extends JMXAction {
 
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
 
-		ObjectName objectName = new ObjectName("org.apachemq:type=Broker,brokerName=" + jmxBrokerName
+		ObjectName objectName = new ObjectName("org.apache.activemq:type=Broker,brokerName=" + jmxBrokerName
 				+ ",destinationType=Topic,destinationName=" + topicName);
 
 		TopicViewMBean topicMBean = MBeanServerInvocationHandler.newProxyInstance(connection, objectName,

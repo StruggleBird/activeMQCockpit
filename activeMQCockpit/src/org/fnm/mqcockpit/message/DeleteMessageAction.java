@@ -32,7 +32,7 @@ public class DeleteMessageAction extends JMXAction {
 		JMXConnector connector = JMXConnectorFactory.connect(url, null);
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
 		ObjectName objectName = new ObjectName(
-				"org.apachemq:type=Broker,brokerName="+jmxBrokerName+",destinationType=Queue,destinationName=" + queueName);
+				"org.apache.activemq:type=Broker,brokerName="+jmxBrokerName+",destinationType=Queue,destinationName=" + queueName);
 		QueueViewMBean queueViewMBean = MBeanServerInvocationHandler.newProxyInstance(connection, objectName,
 				QueueViewMBean.class, true);
 		queueViewMBean.removeMessage(jmsMessageId);

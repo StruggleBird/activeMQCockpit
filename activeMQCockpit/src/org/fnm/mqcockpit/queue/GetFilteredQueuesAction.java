@@ -32,7 +32,7 @@ public class GetFilteredQueuesAction extends JMXAction {
 		connector.connect();
 
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
-		ObjectName name = new ObjectName("org.apachemq:type=Broker,brokerName=" + jmxBrokerName);
+		ObjectName name = new ObjectName("org.apache.activemq:type=Broker,brokerName=" + jmxBrokerName);
 		BrokerViewMBean mbean = MBeanServerInvocationHandler
 				.newProxyInstance(connection, name, BrokerViewMBean.class, true);
 

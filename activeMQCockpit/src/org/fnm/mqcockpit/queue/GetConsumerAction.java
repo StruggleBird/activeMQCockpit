@@ -33,7 +33,7 @@ public class GetConsumerAction extends JMXAction {
 
 		MBeanServerConnection connection = connector.getMBeanServerConnection();
 
-		ObjectName queueObjectName = new ObjectName("org.apachemq:type=Broker,brokerName=" + jmxBrokerName
+		ObjectName queueObjectName = new ObjectName("org.apache.activemq:type=Broker,brokerName=" + jmxBrokerName
 				+ ",destinationType=Queue,destinationName=" + queueName);
 
 		QueueViewMBean queueMBean = MBeanServerInvocationHandler.newProxyInstance(connection, queueObjectName,

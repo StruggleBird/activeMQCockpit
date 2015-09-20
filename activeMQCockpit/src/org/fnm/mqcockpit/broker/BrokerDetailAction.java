@@ -33,12 +33,12 @@ public class BrokerDetailAction extends JMXAction {
 
 		try {
 
-			JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + jmxPort + "/jmxrmi");
+			JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + 1099 + "/jmxrmi");
 			JMXConnector connector = JMXConnectorFactory.connect(url, null);
 			connector.connect();
 
 			MBeanServerConnection connection = connector.getMBeanServerConnection();
-			ObjectName objectName = new ObjectName("org.apachemq:type=Broker,brokerName=" + jmxBrokerName);
+			ObjectName objectName = new ObjectName("org.apache.activemq:type=Broker,brokerName=localhost");
 
 			BrokerViewMBean brokerViewMBean = MBeanServerInvocationHandler.newProxyInstance(connection, objectName,
 					BrokerViewMBean.class, true);
@@ -56,7 +56,7 @@ public class BrokerDetailAction extends JMXAction {
 			return "success";
 
 		} catch (Exception e) {
-			
+		    e.printStackTrace();
 			errorMessages = new ArrayList<>(); 
 			
 			StringBuffer buffer = new StringBuffer(); 
